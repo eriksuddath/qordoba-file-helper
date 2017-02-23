@@ -16,6 +16,7 @@ let sourceDir = `${process.cwd()}/${loadPath}/${sourceLanguage}`;
 const _validateSourceData = () => {
   if (configFile.source === undefined) { configFile.source = {}};
   if (configFile['source'][sourceLanguage] === undefined) { configFile['source'][sourceLanguage] = [] };
+  source = configFile.source;
 }
 
 // get any source files that have been modified since last uplaod / update

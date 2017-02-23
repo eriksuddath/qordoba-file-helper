@@ -29,6 +29,7 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
+qordoba.config.json
 
 # Optional npm cache directory
 .npm
@@ -37,4 +38,3 @@ jspm_packages
 .node_repl_history
 
 # Qordoba Config
-qordoba.config.json

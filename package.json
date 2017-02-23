@@ -23,7 +23,8 @@
     "npm": "^4.1.2"
   },
   "dependencies": {
-    "qordoba-js-sdk": "0.0.2"
+    "qordoba-js-sdk": "0.0.2",
+    "qordoba-nodejs-sdk": "0.0.3"
   },
   "bin": {
     "download": "node lib/bin/download.js",

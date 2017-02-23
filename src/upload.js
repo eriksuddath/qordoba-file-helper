@@ -2,14 +2,14 @@ import fs from 'fs';
 import app from './app';
 import { getLastModified } from './helpers';
 
-const configPath = `${process.cwd()}/qordoba.config.json`;
-const configFile = require(configPath);
+let configPath = `${process.cwd()}/qordoba.config.json`;
+let configFile = require(configPath);
 
-const { source, config } = configFile;
-const { sourceLanguage, loadPath } = config;
+let { source, config } = configFile;
+let { sourceLanguage, loadPath } = config;
 
 // location of source language files
-const sourceDir = `${process.cwd()}/${loadPath}/${sourceLanguage}`;
+let sourceDir = `${process.cwd()}/${loadPath}/${sourceLanguage}`;
 
 // get files from source directory and attach timestamps
 const getFiles = () => {
@@ -60,8 +60,9 @@ const writeNewConfig = (files) => {
 
 // make sure source structure exists in config file
 const _validateSourceData = () => {
-  if (configFile.source === undefined) { configFile.source = {}};
-  if (configFile['source'][sourceLanguage] === undefined) { configFile['source'][sourceLanguage] = [] };
+  if (source === undefined) { source = {}};
+  if (source[sourceLanguage] === undefined) { source[sourceLanguage] = [] };
+  configFile.source = source;
 }
 
 // transform filenames into format for uploading
@@ -75,13 +76,14 @@ const transformForUpload = (filenames) => {
 }
 
 // upload files to qordoba
-const upload = (files) => {
+const upload = (files, version) => {
   if (files.length === 0) {
     console.log('No new files to upload');
     return;
   }
 
-  app.file.upload(files)
+  console.log(`uploading files: ${JSON.stringify(files, null, 2)} with versionTag: ${version}`);
+  app.file.upload(files, version)
   .then( (files) => writeNewConfig(files) )
   .catch( err => console.log(err) )
 }
@@ -89,17 +91,19 @@ const upload = (files) => {
 // upload any new or modified files to Qordoba
 const uploadModified = () => {
   _validateSourceData();
+  const version = process.argv[2] || null;
 
   const filenames = getModifiedFiles().map( ({ filename }) => filename )
   const toUpload = transformForUpload(filenames);
 
-  upload(toUpload);
+  upload(toUpload, version);
 }
 
 // upload only new files to qordoba
 // can use update command to update any existing files
 const uploadNew = () => {
   _validateSourceData();
+  const version = process.argv[2] || null;
 
   const savedSourceFiles = source[sourceLanguage];
   const storedFilenames = savedSourceFiles.map(({ filename }) => filename );
@@ -108,11 +112,26 @@ const uploadNew = () => {
 
   const toUpload = transformForUpload(filenames.filter( filename => !storedFilenames.includes(filename) ));
 
-  upload(toUpload);
+  upload(toUpload, version);
 }
 
 export { uploadModified, uploadNew };
 
-
+// export private methods for testing and hijack some globals
+export function _test(options) {
+  source = options.source;
+  sourceLanguage = options.sourceLanguage;
+  sourceDir = options.sourceDir;
+  configFile = options.configFile;
+  configPath = options.configPath;
+  return {
+    getFiles,
+    getFileData,
+    getModifiedFiles,
+    writeNewConfig,
+    _validateSourceData,
+    transformForUpload
+  }
+}
 
 

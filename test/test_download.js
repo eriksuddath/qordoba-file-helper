@@ -6,7 +6,7 @@ const fileMock = `${process.cwd()}/test/fileMock`
 
 const { getLanguageIds, getLanguageCode, getFileDataFromQordoba, _validatePath, downloadAndWriteFile, writeNewConfig } = _test();
 
-xdescribe('download', () => {
+describe('download', () => {
 
   describe('getLanguageIds', () => {
 

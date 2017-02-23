@@ -19,6 +19,12 @@ const getLanguageCode = (languageId) => {
   return langCodes[languageId]
 }
 
+// make sure target structure exists in config file
+const _validateTargetData = (lgCode) => {
+  if (configFile.target === undefined) { configFile.target = {}};
+  if (configFile['target'][lgCode] === undefined) { configFile['target'][lgCode] = [] };
+}
+
 // get metadata from most recent version of project files
 // for all languages
 const getFileDataFromQordoba = () => {
@@ -78,10 +84,12 @@ const writeNewConfig = (fileData) => {
 
 // check for and download any out of date files
 const download = () => {
+
   getFileDataFromQordoba().then((fileData) => {
     const lgCodes = Object.keys(fileData);
 
     lgCodes.forEach((lgCode) => {
+      _validateTargetData(lgCode);
       const files = fileData[lgCode];
 
       files.forEach(({ fileId, filename, updated }) => {

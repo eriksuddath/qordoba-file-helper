@@ -1,4 +1,4 @@
-import App from 'qordoba-js-sdk';
+import App from 'qordoba-nodejs-sdk';
 import { _validateConfig } from './helpers';
 const config = require(`${process.cwd()}/qordoba.config.json`).config;
 const { consumerKey, organizationId, projectId } = config;
