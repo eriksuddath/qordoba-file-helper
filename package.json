@@ -1,6 +1,6 @@
 {
   "name": "qordoba-file-helper",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "helps manage file uploads, update and downloads to & from qordoba",
   "main": "lib/index.js",
   "scripts": {

@@ -78,13 +78,16 @@ const transformForUpload = (filenames) => {
 // upload files to qordoba
 const upload = (files, version) => {
   if (files.length === 0) {
-    console.log('No new files to upload');
+    console.log('No new or modified files to upload');
     return;
   }
 
-  console.log(`uploading files: ${JSON.stringify(files, null, 2)} with versionTag: ${version}`);
+  console.log(`uploading ${files.map(({ path }) => path.split('/').slice(-1))} with versionTag ${version}`);
   app.file.upload(files, version)
-  .then( (files) => writeNewConfig(files) )
+  .then( (files) => {
+    console.log(`successfully uploaded ${files.map(({ filename }) => filename )}`)
+    writeNewConfig(files) 
+  })
   .catch( err => console.log(err) )
 }
 
