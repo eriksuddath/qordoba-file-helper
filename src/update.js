@@ -85,11 +85,11 @@ const update = () => {
 
   files.forEach( (file) => {
     console.log(`adding file with fileId: ${file.fileId} to update queue`);
-    updateQueue = updateQueue.then(delay)
-      .then( () => app.file.update(file) )
+    updateQueue = updateQueue.then( () => app.file.update(file) )
       .then( ({ files_ids }) => {
         console.log(`file with fileId: ${file.fileId} updated. New id ${files_ids[0]}`);
-        return newIds.push( files_ids[0] )
+        newIds.push( files_ids[0] )
+        return delay();
       })
       .catch( err => console.log(err) )
   })

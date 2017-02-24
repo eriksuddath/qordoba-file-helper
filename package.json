@@ -1,13 +1,13 @@
 {
   "name": "qordoba-file-helper",
-  "version": "0.0.0",
+  "version": "0.0.5",
   "description": "helps manage file uploads, update and downloads to & from qordoba",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "uploadNew": "gulp build && node lib/bin/uploadNew.js",
-    "uploadModified": "gulp build && node lib/bin/uploadModified.js",
-    "download": "gulp build && node lib/bin/download.js",
-    "update": "gulp build && node lib/bin/update.js",
+    "uploadNew": "gulp build && node bin/uploadNew.js",
+    "uploadModified": "gulp build && node bin/uploadModified.js",
+    "download": "gulp build && node bin/download.js",
+    "update": "gulp build && node bin/update.js",
     "test": "gulp build && mocha --timeout 10000"
   },
   "keywords": [],
@@ -27,9 +27,9 @@
     "qordoba-nodejs-sdk": "0.0.3"
   },
   "bin": {
-    "download": "node lib/bin/download.js",
-    "update": "node lib/bin/update.js",
-    "uploadModified": "node lib/bin/uploadModified.js",
-    "uploadNew": "node lib/bin/uploadNew.js"
+    "download": "bin/download.js",
+    "update": "bin/update.js",
+    "uploadModified": "bin/uploadModified.js",
+    "uploadNew": "bin/uploadNew.js"
   }
 }

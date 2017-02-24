@@ -9,7 +9,7 @@ export const getLastModified = (file, sourceDir) => {
 }
 
 // helper function to add delay to update process
-const delay = () => new Promise(resolve => setTimeout(resolve, 7000));
+export const delay = () => new Promise(resolve => setTimeout(resolve, 7000));
 
 // ERROR HANDLING
 const SAVE_PATH_ERROR = 'savePath is not a valid directory';
@@ -22,7 +22,7 @@ const MILESTONE_ID_ERROR = 'must be a valid 4 digit numeric milestoneId';
 const CONSUMER_KEY_ERROR = 'consumer key must be a 32 digit string';
 
 // helper function to transform to path of cwd
-const _transformPath = (path) => `${process.cwd()}/${path}`;
+export const _transformPath = (path) => `${process.cwd()}/${path}`;
 
 // validates config before every call
 export const _validateConfig = (config) => {
