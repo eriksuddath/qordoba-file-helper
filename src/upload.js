@@ -82,10 +82,10 @@ const upload = (files, version) => {
     return;
   }
 
-  console.log(`uploading ${files.map(({ path }) => path.split('/').slice(-1))} with versionTag ${version}`);
+  console.log(`uploading:\n${files.map(({ path }) => path.split('/').slice(-1)).join('\n')}\nWith versionTag ${version}`);
   app.file.upload(files, version)
   .then( (files) => {
-    console.log(`successfully uploaded ${files.map(({ filename }) => filename )}`)
+    console.log(`successfully uploaded:\n${files.map(({ filename }) => filename ).join('\n')}`)
     writeNewConfig(files) 
   })
   .catch( err => console.log(err) )
@@ -118,7 +118,22 @@ const uploadNew = () => {
   upload(toUpload, version);
 }
 
-export { uploadModified, uploadNew };
+// upload all source files to qordoba
+const uploadAll = () => {
+  _validateSourceData();
+  const version = process.argv[2] || null;
+
+  const savedSourceFiles = source[sourceLanguage];
+  const storedFilenames = savedSourceFiles.map(({ filename }) => filename );
+
+  const filenames = getFiles().map( ({ filename }) => filename );
+
+  const toUpload = transformForUpload( filenames );
+
+  upload(toUpload, version);
+}
+
+export { uploadModified, uploadNew, uploadAll };
 
 // export private methods for testing and hijack some globals
 export function _test(options) {

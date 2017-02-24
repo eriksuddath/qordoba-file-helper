@@ -1,5 +1,5 @@
 import download from './download';
-import { uploadModified, uploadNew } from './upload';
+import { uploadModified, uploadNew, uploadAll } from './upload';
 import update from './update';
 
 const exports = module.exports = {};
@@ -21,6 +21,11 @@ exports.uploadNew = uploadNew;
 /**
 * updates any source files in qordoba.config.json that have been modified
 * since last upload / update
+* updates config with new fileId and timestamp after successful update
+*/
+exports.uploadAll = uploadAll;
+/**
+* updates all source files in qordoba.config.json that have been modified
 * updates config with new fileId and timestamp after successful update
 */
 exports.update = update;

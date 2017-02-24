@@ -87,7 +87,7 @@ const update = () => {
     console.log(`adding file with fileId: ${file.fileId} to update queue`);
     updateQueue = updateQueue.then( () => app.file.update(file) )
       .then( ({ files_ids }) => {
-        console.log(`file with fileId: ${file.fileId} updated. New id ${files_ids[0]}`);
+        console.log(`successfully updated file with fileId: ${file.fileId}. New id ${files_ids[0]}`);
         newIds.push( files_ids[0] )
         return delay();
       })
